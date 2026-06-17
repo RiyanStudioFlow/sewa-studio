@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "node /assets/nginx.js /etc/nginx/nginx.conf /app/public"
+    "startCommand": "NIXPACKS_PHP_SITE_PROVIDER=laravel NIXPACKS_PHP_ROOT_DIR=public node /assets/nginx.js /etc/nginx/nginx.conf /app/public"
   }
 }
