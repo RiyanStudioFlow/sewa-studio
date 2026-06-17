@@ -2,4 +2,5 @@
 builder = "nixpacks"
 
 [run]
-startCmd = "node .nixpacks/nginx.template.html || php -S 0.0.0.0:$PORT -t public"
+buildCmd = "php artisan config:cache && php artisan view:cache"
+startCmd = "nginx -g 'daemon off;' & php-fpm -F"
