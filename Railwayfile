@@ -1,6 +1,13 @@
 {
   "$schema": "https://railway.com/railwayfile.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "env": {
+      "NIXPACKS_PHP_ROOT_DIR": "/app/public",
+      "NIXPACKS_PHP_SITE_PROVIDER": "laravel"
+    }
+  },
+  "deploy": {
+    "startCommand": "node /assets/nginx.js /etc/nginx/nginx.conf /app/public"
   }
 }
