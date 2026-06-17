@@ -1,0 +1,9 @@
+{
+  "$schema": "https://railway.com/railwayfile.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "node /assets/nginx.js /etc/nginx/nginx.conf public"
+  }
+}
