@@ -33,10 +33,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "mkdir -p public",
-            "ln -sf /app/public /nix/store/*-nginx-*/public || true"
-        ],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
