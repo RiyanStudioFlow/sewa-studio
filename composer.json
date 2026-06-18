@@ -31,10 +31,7 @@
             "Tests\\": "tests/"
         }
     },
-    "scripts": {
-        "pre-install-cmd": [
-            "export NIXPACKS_PHP_ROOT_DIR=public"
-        ],
+   "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
