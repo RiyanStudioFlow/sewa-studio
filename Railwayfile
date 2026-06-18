@@ -1,0 +1,5 @@
+[build]
+builder = "nixpacks"
+
+[run]
+command = "nginx -c /app/nginx.conf & php-fpm -F"
