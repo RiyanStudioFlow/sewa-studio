@@ -2,81 +2,68 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use App\Models\Barang;
+use App\Models\Transaksi;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Seed the application's database.
+     */
     public function run(): void
     {
-        // 1. Matikan foreign key check agar proses pembersihan lancar tanpa error 1701
+        // 1. NGAPUS DATA LAWAS BIAR GAK DUPLIKAT / EROR UNIQUE
+        // Perintah iki mbusak data pancingan lawas dhisik sakdurunge nggawe sing anyar
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        
-        DB::table('transaksis')->truncate();
-        DB::table('barangs')->truncate();
-        DB::table('users')->truncate();
-        
-        // Cek jika tabel 'admins' ada di aplikasi kamu, kita bersihkan juga
-        if (\Schema::hasTable('admins')) {
-            DB::table('admins')->truncate();
-        }
-        
+        User::truncate();
+        Barang::truncate();
+        Transaksi::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // 2. Daftarkan Akun ke Tabel 'users' (Jalur standar Laravel)
-        DB::table('users')->insert([
-            'name' => 'Admin Studio',
+        // 2. AKUN SAKTI NOMER 1: UTAMA / ADMIN STUDIO
+        $admin = User::create([
+            'name' => 'Admin LensFlow',
             'email' => 'admin123@gmail.com',
-            'password' => Hash::make('rahasia456'),
+            'password' => Hash::make('rahasia456'), // 🔥 Password Admin
             'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
-        // 3. Daftarkan Akun ke Tabel 'admins' (Jalur Login Custom /login-admin kamu)
-        if (\Schema::hasTable('admins')) {
-            DB::table('admins')->insert([
-                'username' => 'admin@gmail.com', // disesuaikan jika fieldnya berbentuk username atau nama
-                'name' => 'Admin Studio',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('rahasia123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        // 3. AKUN SAKTI NOMER 2: USER / PELANGGAN
+        $pelanggan = User::create([
+            'name' => 'Riyan Pelanggan',
+            'email' => 'pelanggan@gmail.com',
+            'password' => Hash::make('pelanggan123'), // 🔥 Password Pelanggan
+            'email_verified_at' => now(),
+        ]);
 
-        // 4. Input Data Barang Dummy (Sesuai kolom database kamu)
-        DB::table('barangs')->insert([
-            [
-                'nama_barang' => 'Sony Alpha A7 IV',
-                'kategori' => 'Kamera',
-                'stok' => 5,
-                'harga_sewa' => 350000,
-                'foto' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_barang' => 'Sony ZV-1 Vlogging Camera',
-                'kategori' => 'Kamera',
-                'stok' => 6,
-                'harga_sewa' => 150000,
-                'foto' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama_barang' => 'Aputure Amaran 200d LED Light',
-                'kategori' => 'Lighting',
-                'stok' => 6,
-                'harga_sewa' => 120000,
-                'foto' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
+        // 4. DATA BARANG DUMMY (Supaya Dashboard Gak Kosong & Gak Eror 500)
+        $barang1 = Barang::create([
+            'nama_barang' => 'Sony Alpha A7 IV',
+            'kategori' => 'Kamera',
+            'stok' => 5,
+            'harga_sewa' => 350000,
+            'foto' => null,
+        ]);
+
+        $barang2 = Barang::create([
+            'nama_barang' => 'Lighting Godox SL60W',
+            'kategori' => 'Lighting',
+            'stok' => 3,
+            'harga_sewa' => 75000,
+            'foto' => null,
+        ]);
+
+        // 5. DATA TRANSAKSI DUMMY (Kanggo ngisi riwayat transaksi aktif nang dashboard)
+        Transaksi::create([
+            'barang_id' => $barang1->id,
+            'nama_penyewa' => $pelanggan->name,
+            'email_penyewa' => $pelanggan->email,
+            'durasi' => 3,
+            'status_sewa' => 'Disewa'
         ]);
     }
 }
