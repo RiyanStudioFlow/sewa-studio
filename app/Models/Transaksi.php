@@ -9,18 +9,11 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    // Mendaftarkan semua kolom agar diizinkan menyimpan data (Mass Assignment)
-    protected $fillable = [
-        'user_id',
-        'barang_id',
-        'tanggal_mulai',
-        'tanggal_selesai',
-        'jumlah_sewa',
-        'status_sewa',
-        'persentase_kerusakan',
-        'total_denda',
-        'status_sanksi',
-    ];
+    /**
+     * Trik Sakti: Nggae $guarded kosong ben kabeh kolom (termasuk status_sewa, 
+     * nama_penyewa, dll) oleh mlebu lan disimpen nang database tanpa diblokir Laravel.
+     */
+    protected $guarded = [];
 
     /**
      * Relasi ke model Barang (Satu transaksi memiliki satu barang/alat studio)
