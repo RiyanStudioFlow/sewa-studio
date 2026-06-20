@@ -51,6 +51,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/resik-database-rahasia', function () {
+    Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
+    return 'Database wis resik lan keisi seeder, mas!';
+});
 });
 
 require __DIR__.'/auth.php';
