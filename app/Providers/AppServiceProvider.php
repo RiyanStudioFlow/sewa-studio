@@ -19,10 +19,9 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        // Iki tambahan penting 2: Mekso rute dadi HTTPS pas online
-        if (config('app.env') === 'production' || env('PORT')) {
-            URL::forceScheme('https');
-        }
+{
+    if (config('app.env') === 'production' || env('PORT')) {
+        \Illuminate\Support\Facades\URL::forceScheme('https');
     }
+}
 }
