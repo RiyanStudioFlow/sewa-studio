@@ -6,30 +6,6 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-
-// 🔥 RUTE SAKTI (Tanpa Seeder, Langsung Bikin Akun)
-Route::get('/refresh-db', function () {
-    try {
-        // 1. Reset tabel database
-        Artisan::call('migrate:fresh', ['--force' => true]);
-        
-        // 2. Langsung gawe akun Admin nang kene
-        User::create([
-            'name' => 'Admin LensFlow Studio',
-            'email' => 'admin123@gmail.com',
-            'password' => Hash::make('rahasia456'), 
-            'role' => 'admin',
-            'email_verified_at' => now(),
-        ]);
-
-        return '<h1>MANTAP COK! DATABASE ANYAR, ADMIN WIS MLEBU!</h1><p>Saiki ndang bukak /login</p>';
-    } catch (\Exception $e) {
-        return 'Eror mase: ' . $e->getMessage();
-    }
-});
 
 Route::get('/', function () {
     return view('welcome');
