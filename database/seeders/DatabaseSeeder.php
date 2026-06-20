@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
         DB::table('transaksis')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // 1. AKUN UTAMA ADMIN (Ditambahi Role Admin)
+        // 1. AKUN UTAMA ADMIN
         DB::table('users')->insert([
             'name' => 'Admin LensFlow Studio',
             'email' => 'admin123@gmail.com',
             'password' => Hash::make('rahasia456'), 
-            'role' => 'admin', // 🔥 Iki wajib ben dadi admin!
+            'role' => 'admin', 
             'email_verified_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),

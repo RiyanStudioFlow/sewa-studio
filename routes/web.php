@@ -8,7 +8,7 @@ use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
-// 🔥 RUTE SAKTI GAWE REFRESH DATABASE NANG RAILWAY (PENTING)
+// Rute gawe refresh database online
 Route::get('/refresh-db', function () {
     try {
         Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
