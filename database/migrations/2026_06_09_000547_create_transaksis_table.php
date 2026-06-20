@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('nama_penyewa');
             $table->string('email_penyewa');
             $table->integer('durasi');
+            $table->string('status_sewa')->default('Disewa'); // <-- Iki sing bener
             $table->timestamps();
         });
     }
