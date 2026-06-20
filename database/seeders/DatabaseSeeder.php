@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin Studio',
             'email' => 'admin123@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('rahasia456'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
             'created_at' => now(),
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
                 'username' => 'admin@gmail.com', // disesuaikan jika fieldnya berbentuk username atau nama
                 'name' => 'Admin Studio',
                 'email' => 'admin@gmail.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('rahasia123'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
