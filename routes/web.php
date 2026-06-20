@@ -7,12 +7,25 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-// Rute gawe refresh database online
+// 🔥 RUTE SAKTI (Tanpa Seeder, Langsung Bikin Akun)
 Route::get('/refresh-db', function () {
     try {
-        Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
-        return '<h1>MANTAP COK! DATABASE WIS KE-REFRESH LAN ADMIN WIS MLEBU!</h1><p>Saiki ndang bukak /login</p>';
+        // 1. Reset tabel database
+        Artisan::call('migrate:fresh', ['--force' => true]);
+        
+        // 2. Langsung gawe akun Admin nang kene
+        User::create([
+            'name' => 'Admin LensFlow Studio',
+            'email' => 'admin123@gmail.com',
+            'password' => Hash::make('rahasia456'), 
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
+
+        return '<h1>MANTAP COK! DATABASE ANYAR, ADMIN WIS MLEBU!</h1><p>Saiki ndang bukak /login</p>';
     } catch (\Exception $e) {
         return 'Eror mase: ' . $e->getMessage();
     }
@@ -22,7 +35,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Semua Route Wajib Login
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
