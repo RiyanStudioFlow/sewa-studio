@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LaporanController; // <-- Menambahkan Import LaporanController baru
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan; // <-- PENTING: Kudu diimport ben gak nggunder eror Class Artisan Not Found
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// ==========================================================================
+// 🔥 RUTE EMERGENCY/RAHASIA (Diseleh njobo bunderan Auth ben iso diakses langsung)
+// ==========================================================================
+Route::get('/mesti-lancar-jaya', function () {
+    try {
+        // Meksa server fresh database online lan langsung nginject data seeder bawaan
+        Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
+        return '<h1>PROSES SUKSES MASE!</h1><p>Database Railway wis resik gres lan data pancingan wis melbu kabeh. Saiki balika nang rute utama terus jajalen login utawa daftar maneh!</p>';
+    } catch (\Exception $e) {
+        return 'Waduh eror mase: ' . $e->getMessage();
+    }
+});
+
 
 // Semua Route yang Wajib Login (Protected Routes)
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -51,10 +66,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/resik-database-rahasia', function () {
-    Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
-    return 'Database wis resik lan keisi seeder, mas!';
-});
 });
 
 require __DIR__.'/auth.php';
