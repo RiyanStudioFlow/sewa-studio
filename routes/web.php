@@ -67,5 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return "Rating Bintang Berhasil Dikirim. Verifikasi Status Selesai: Valid.";
         })->name('transaksi.rating');
     });
+    Route::get('/jalankan-migrasi-rahasia', function() {
+    \Artisan::call('config:clear');
+    \Artisan::call('migrate:fresh', ['--seed' => true, '--force' => true]);
+    return "Database Berhasil Di-migrate lan Di-seed, Mase! Mantap Pool!";
+});
 
 });
