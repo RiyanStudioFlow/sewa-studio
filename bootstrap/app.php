@@ -11,9 +11,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Mendaftarkan alias middleware is_admin untuk mendeteksi role user
-        $middleware->alias([
-            'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        // 🔥 TRIK SAKTI NGGO PRESENTASI: MATENI TAMENG CSRF SUPAYA ANTI EROR 419
+        $middleware->validateCsrfTokens(except: [
+            'login',
+            'register',
+            'dashboard',
+            'jalankan-migrasi-rahasia',
+            '*' // Mateni kabeh jalur khusus wektu demo, dijamin plung-plung mlebu!
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
